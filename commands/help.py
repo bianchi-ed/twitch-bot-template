@@ -1,4 +1,4 @@
-from twitch.commands import handler, PREFIX
+from twitch.message_handler import handler, PREFIX
 
 
 @handler.command(name="help", aliases=["cmds"], cooldown=5)

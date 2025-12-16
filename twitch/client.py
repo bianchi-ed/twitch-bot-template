@@ -12,6 +12,7 @@ class TwitchClient:
         self._on_message_callback = on_message_callback
         self._channels = []
         self._is_running = False
+        self.bot_username = None
     
     def _get_required_env(self, name):
         value = os.getenv(name)
@@ -27,6 +28,7 @@ class TwitchClient:
             raise ValueError("TWITCH_PORT must be a valid integer")
         oauth_token = self._get_required_env("TWITCH_OAUTH_TOKEN")
         bot_username = self._get_required_env("TWITCH_BOT_USERNAME")
+        self.bot_username = bot_username
         self._channels = [channel.strip() for channel in os.getenv("TWITCH_CHANNELS", "").split(",") if channel.strip()]
         
         if not self._channels:

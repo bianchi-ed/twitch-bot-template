@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from twitch.client import TwitchClient
-from twitch.commands import handler
+from twitch.message_handler import handler
 from commands import load_commands
 
 _client = None
