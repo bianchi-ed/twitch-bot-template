@@ -3,13 +3,15 @@ import requests
 from twitch.message_handler import handler
 from datetime import datetime
 
+PREFIX = os.getenv("COMMAND_PREFIX")
+
 TWITCH_CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
 TWITCH_USER_ACCESS_TOKEN = os.getenv("TWITCH_USER_ACCESS_TOKEN")
 
 @handler.command(name="whois", cooldown=5)
 def whois(ctx):
     if not ctx.args:
-        ctx.reply("Usage: !whois <username>")
+        ctx.reply(f"Usage: {PREFIX}whois <username>")
         return
     user = ctx.args[0]
     url = f"https://api.twitch.tv/helix/users?login={user}"
@@ -34,7 +36,7 @@ def whois(ctx):
                 f"[ ID: {u['id']} ] "
                 f"[ Broadcaster: {u.get('broadcaster_type', 'N/A')} ] "
                 f"[ Created: {created_at_us} ] "
-                f"[ Profile pic: {u.get('profile_image_url', 'N/A')} ]"
+                f"[ Profile Pic: {u.get('profile_image_url', 'N/A')} ]"
             )
             ctx.reply(msg)
         else:

@@ -54,4 +54,3 @@ def ping(ctx):
 | `ctx.is_mod`        | bool     | True if the user is a moderator                  |
 | `ctx.is_sub`        | bool     | True if the user is a subscriber                 |
 | `ctx.is_broadcaster`| bool     | True if the user is the channel owner            |
-| `ctx.reply(text)`   | method   | Sends a message                                  |

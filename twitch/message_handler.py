@@ -2,8 +2,7 @@ import os
 import re
 from collections import defaultdict
 
-PREFIX = os.getenv("COMMAND_PREFIX", "!")
-
+PREFIX = os.getenv("COMMAND_PREFIX")
 
 class MessageHandler:
     def __init__(self):
