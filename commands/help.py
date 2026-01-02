@@ -1,6 +1,6 @@
-from twitch.message_handler import handler, PREFIX
+from twitch.message_handler import commands, PREFIX
 
 
-@handler.command(name="help", aliases=["cmds"], cooldown=5)
+@commands.add(name="help", aliases=["cmds"], cooldown=5)
 def help_command(ctx):
-    ctx.reply(f"Commands: {', '.join(PREFIX + c for c in handler.get_all())}")
+    ctx.reply(f"Commands: {', '.join(PREFIX + c for c in commands.list())}")

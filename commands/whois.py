@@ -1,6 +1,6 @@
 import os
 import requests
-from twitch.message_handler import handler
+from twitch.message_handler import commands
 from datetime import datetime
 
 PREFIX = os.getenv("COMMAND_PREFIX")
@@ -8,7 +8,7 @@ PREFIX = os.getenv("COMMAND_PREFIX")
 TWITCH_CLIENT_ID = os.getenv("TWITCH_CLIENT_ID")
 TWITCH_USER_ACCESS_TOKEN = os.getenv("TWITCH_USER_ACCESS_TOKEN")
 
-@handler.command(name="whois", cooldown=5)
+@commands.add(name="whois", cooldown=5)
 def whois(ctx):
     if not ctx.args:
         ctx.reply(f"Usage: {PREFIX}whois <username>")

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from twitch.client import TwitchClient
-from twitch.message_handler import handler
+from twitch.message_handler import commands
 from commands import load_commands
 
 _client = None
@@ -22,7 +22,7 @@ def main():
     signal.signal(signal.SIGINT, shutdown)
     
     load_commands()
-    _client = TwitchClient(handler.on_message)
+    _client = TwitchClient(commands.handle)
     
     try:
         _client.run()

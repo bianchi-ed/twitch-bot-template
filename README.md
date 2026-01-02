@@ -26,9 +26,9 @@ twitch-bot-template/
 Create a file in `commands/`:
 
 ```python
-from twitch.message_handler import handler
+from twitch.message_handler import commands
 
-@handler.command(name="ping", aliases=["p"], cooldown=5)
+@commands.add(name="ping", aliases=["p"], cooldown=5)
 def ping(ctx):
     ctx.reply(f"Pong, {ctx.display_name}!")
 ```

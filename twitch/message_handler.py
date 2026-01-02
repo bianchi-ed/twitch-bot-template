@@ -4,12 +4,12 @@ from collections import defaultdict
 
 PREFIX = os.getenv("COMMAND_PREFIX")
 
-class MessageHandler:
+class ChatCommands:
     def __init__(self):
-        self._commands = {}
-        self._cooldowns = defaultdict(dict)
+        self.command_map = {}
+        self.user_cooldowns = defaultdict(dict)
 
-    def command(self, name=None, aliases=None, cooldown=0, mod_only=False, broadcaster_only=False):
+    def add(self, name=None, aliases=None, cooldown=0, mod_only=False, broadcaster_only=False):
         def decorator(func):
             cmd_name = name or func.__name__
             options = {
@@ -18,43 +18,41 @@ class MessageHandler:
                 "mod_only": mod_only,
                 "broadcaster_only": broadcaster_only
             }
-            self.register_command(cmd_name, func, **options)
+            self.add_command(cmd_name, func, **options)
             return func
         return decorator
 
-    def register_command(self, name, func, **options):
-        self._commands[name] = {"func": func, "options": options}
+    def add_command(self, name, func, **options):
+        self.command_map[name] = {"func": func, "options": options}
         for alias in options.get("aliases", []):
-            self._commands[alias] = self._commands[name]
+            self.command_map[alias] = self.command_map[name]
 
-    def on_message(self, message, client):
+    def handle(self, message, client):
         text = message.get("text", "")
         if text.startswith(PREFIX):
             print(f"[{PREFIX}] <{message['display_name']}> {message['text']}")
-            self.handle_command(message, client)
+            self.run(message, client)
         else:
-            self.handle_general_message(message, client)
+            self.show(message, client)
 
-    def handle_command(self, message, client):
+    def run(self, message, client):
         text = message["text"][len(PREFIX):]
         if not text:
             return
         parts = text.split()
         cmd = parts[0].lower()
         args = parts[1:]
-        if cmd in self._commands:
-            ctx = self._build_context(message, client, args)
-            self._commands[cmd]["func"](ctx)
+        if cmd in self.command_map:
+            ctx = self.make_context(message, client, args)
+            self.command_map[cmd]["func"](ctx)
 
-    def get_all(self):
-        # Return only unique command names (not aliases)
-        return [name for name, v in self._commands.items() if v["func"].__name__ == name]
+    def list(self):
+        return [name for name, v in self.command_map.items() if v["func"].__name__ == name]
 
-    def handle_general_message(self, message, client):
-        # Print non-command messages to the console
+    def show(self, message, client):
         print(f"<{message['display_name']}> {message['text']}")
 
-    def _build_context(self, message, client, args):
+    def make_context(self, message, client, args):
         class Ctx:
             def __init__(self):
                 self.username = message["username"]
@@ -71,4 +69,4 @@ class MessageHandler:
                 print(f"[{PREFIX}] <{self.bot_username}> {text}")
         return Ctx()
 
-handler = MessageHandler()
+commands = ChatCommands()
