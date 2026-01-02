@@ -1,9 +1,10 @@
 
-# Twitch IRC Bot
 
-Template project for building Twitch chat bots in Python. Provides a basic command system and Twitch IRC connection.
+# Twitch-bot-template
 
-## Project Structure
+Template project for building Twitch chat bots in Python. Provides a simple command system and Twitch IRC connection.
+
+## Project structure
 
 ```
 twitch-bot-template/
@@ -13,6 +14,7 @@ twitch-bot-template/
 ├── commands/            
 │   ├── __init__.py      
 │   ├── help.py          
+│   ├── whois.py         
 ├── twitch/              
 │   ├── __init__.py
 │   ├── client.py        
@@ -21,29 +23,19 @@ twitch-bot-template/
 ├── .gitignore           
 ```
 
-## Creating Commands
-
-Create a file in `commands/`:
+### Command structure
 
 ```python
-from twitch.message_handler import commands
+from twitch.message_handler import commands, PREFIX
 
 @commands.add(name="ping", aliases=["p"], cooldown=5)
 def ping(ctx):
     ctx.reply(f"Pong, {ctx.display_name}!")
 ```
 
-### Options
+### Context properties
 
-| Option            | Type   | Description                          |
-|-------------------|--------|--------------------------------------|
-| `name`            | str    | Command name (default: function name)|
-| `aliases`         | list   | Alternative names                    |
-| `cooldown`        | int    | Seconds between uses per user        |
-| `mod_only`        | bool   | Restrict to mods/broadcaster         |
-| `broadcaster_only`| bool   | Restrict to broadcaster only         |
-
-### Context Properties
+Each command receives a context object (`ctx`) with:
 
 | Property            | Type     | Description                                      |
 |---------------------|----------|--------------------------------------------------|
@@ -54,3 +46,4 @@ def ping(ctx):
 | `ctx.is_mod`        | bool     | True if the user is a moderator                  |
 | `ctx.is_sub`        | bool     | True if the user is a subscriber                 |
 | `ctx.is_broadcaster`| bool     | True if the user is the channel owner            |
+| `ctx.bot_username`  | str      | The bot's username                               |
