@@ -35,8 +35,6 @@ def ping(ctx):
 
 ### Context properties
 
-Each command receives a context object (`ctx`) with:
-
 | Property            | Type     | Description                                      |
 |---------------------|----------|--------------------------------------------------|
 | `ctx.username`      | str      | User's Twitch username                           |
