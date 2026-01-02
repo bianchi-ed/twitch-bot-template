@@ -6,24 +6,25 @@ Template project for building Twitch chat bots in Python. Provides a simple comm
 
 ## Project structure
 
+
 ```
 twitch-bot-template/
-├── main.py              
-├── requirements.txt     
-├── .env.example         
-├── commands/            
-│   ├── __init__.py      
-│   ├── help.py          
-│   ├── whois.py         
-├── twitch/              
+├── main.py             
+├── requirements.txt    
+├── .env.example              # Example env file
+├── commands/                 # Commands
 │   ├── __init__.py
-│   ├── client.py        
-│   ├── message_handler.py
-├── README.md            
-├── .gitignore           
+│   ├── help.py
+│   ├── whois.py
+├── twitch/                   # Twitch IRC
+│   ├── __init__.py
+│   ├── client.py             # Twitch IRC basic client
+│   ├── message_handler.py    # Command registration and message parsing
+├── README.md                
+├── .gitignore                
 ```
 
-### Command structure
+## Command structure
 
 ```python
 from twitch.message_handler import commands, PREFIX
@@ -33,7 +34,7 @@ def ping(ctx):
     ctx.reply(f"Pong, {ctx.display_name}!")
 ```
 
-### Context properties
+## Context properties
 
 | Property            | Type     | Description                                      |
 |---------------------|----------|--------------------------------------------------|
@@ -44,4 +45,3 @@ def ping(ctx):
 | `ctx.is_mod`        | bool     | True if the user is a moderator                  |
 | `ctx.is_sub`        | bool     | True if the user is a subscriber                 |
 | `ctx.is_broadcaster`| bool     | True if the user is the channel owner            |
-| `ctx.bot_username`  | str      | The bot's username                               |
